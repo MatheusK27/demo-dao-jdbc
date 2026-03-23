@@ -1,6 +1,6 @@
 package aplicacao;
 
-import java.util.Date;
+import java.util.List;
 
 import model.dao.DaoFactory;
 import model.dao.VendedoresDao;
@@ -15,6 +15,13 @@ public class Programa {
         System.out.println("===TEST 1: VENDEDOR ENCONTRADO ===");
         Vendedores vendedores= vendedoresDao.buscarId(3);
         System.out.println(vendedores);
+        System.out.println("===TEST 2: VENDEDOR ENCONTRADO ===");
+        Departamento dep= new Departamento(2, null);
+        List<Vendedores>list= vendedoresDao.buscarPorDepartamento(dep);
+        for(Vendedores ven:list) {
+        	System.out.println(ven);
+        }
+        
 	}
 
 }

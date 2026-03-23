@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.DB;
 import db.DbException;
@@ -91,6 +94,51 @@ public class VendedorDaoJDBC implements VendedoresDao {
 	public List<Vendedores> buscarTodos() {
 		
 		return null;
+	}
+
+	@Override
+	public List<Vendedores> buscarPorDepartamento(Departamento departamento) {
+		PreparedStatement st=null;
+		ResultSet rs=null;
+		try {
+			st=con.prepareStatement(
+					"SELECT seller.*,department.Name as DepName "
+					+ "FROM seller INNER JOIN department "
+					+ "ON seller.DepartmentId = department.Id "
+					+ "WHERE Department.Id = ? "
+					+ "ORDER BY Name");
+			st.setInt(1, departamento.getId());
+			
+			rs= st.executeQuery();
+			
+			List<Vendedores>list= new ArrayList<>();
+			
+			Map<Integer,Departamento> map = new HashMap<>();
+			
+			while(rs.next()) {
+				
+				Departamento dep=map.get(rs.getInt("DepartmentId"));
+				
+				if(dep==null) {
+					
+					dep = instanciaDepartamento(rs);
+				}
+				Vendedores ven= instaciaVendedor(rs,dep);
+					
+				list.add(ven);
+				
+				
+			}
+			return list;
+			
+			}
+		     catch(SQLException e){
+				throw new DbException(e.getMessage());						
+					
+		}finally{
+			DB.closeResultSet(rs);
+			DB.closeStatement(st);
+		}
 	}
 
 }
