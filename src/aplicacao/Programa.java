@@ -37,6 +37,17 @@ public class Programa {
         		"Matheus@hotmail.com",new Date(),4000.0, dep);
         vendedoresDao.inserir(novoVendedor);
         System.out.println("Novo vendedor = "+ novoVendedor.getId());
+        
+        
+        System.out.println("===TEST 5 : ATUALIZAR VENDEDOR ===");
+        vendedores = vendedoresDao.buscarId(19);
+        vendedores.setBaseSalarial(5000.00);
+        vendedoresDao.atualizar(vendedores);
+        
+        System.out.println("Att concluída:  "+ vendedores.getBaseSalarial());
 	}
-
+        
+	
+	
+	
 }

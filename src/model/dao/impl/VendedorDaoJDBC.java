@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,7 +72,30 @@ public class VendedorDaoJDBC implements VendedoresDao {
 
 	@Override
 	public void atualizar(Vendedores obj) {
-		
+		PreparedStatement st=null;
+		try {
+			st=con.prepareStatement(
+					"UPDATE seller  "
+					+ "SET Name = ? , Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? "
+					+ "WHERE Id = ? ");
+					
+					
+			st.setString(1, obj.getNome());
+			st.setString(2, obj.getEmail());
+			st.setDate(3, new java.sql.Date(obj.getAniversario().getTime()));
+			st.setDouble(4, obj.getBaseSalarial());
+			st.setInt(5, obj.getDepartamento().getId());
+			st.setInt(6, obj.getId());
+			
+			st.executeUpdate();
+		}
+			catch(SQLException e) {
+				throw new DbException(e.getMessage());
+			}
+			finally {
+				DB.closeStatement(st);
+				
+			}
 		
 	}
 
