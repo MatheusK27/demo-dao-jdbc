@@ -1,8 +1,10 @@
 package aplicacao;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import model.dao.DaoFactory;
 import model.dao.VendedoresDao;
@@ -11,8 +13,9 @@ import model.entidades.Vendedores;
 
 public class Programa {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 	    SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
+	    Scanner sc= new Scanner(System.in);
 		
         VendedoresDao vendedoresDao= DaoFactory.criarVendedoresDao();
         System.out.println("===TEST 1: VENDEDOR ENCONTRADO ===");
@@ -34,7 +37,7 @@ public class Programa {
         
         System.out.println("===TEST 4 : INSERIR VENDEDOR ===");
         Vendedores novoVendedor = new Vendedores(null, "Matheus", 
-        		"Matheus@hotmail.com",new Date(),4000.0, dep);
+        		"Matheus@hotmail.com",sdf.parse("27/02/1995"),4000.0, dep);
         vendedoresDao.inserir(novoVendedor);
         System.out.println("Novo vendedor = "+ novoVendedor.getId());
         
@@ -45,6 +48,13 @@ public class Programa {
         vendedoresDao.atualizar(vendedores);
         
         System.out.println("Att concluída:  "+ vendedores.getBaseSalarial());
+        
+        System.out.println("===TEST 6 : DELETE ID ===");
+        System.out.println("Digite id pra ser deletado: ");
+        int id= sc.nextInt();
+        vendedoresDao.deletarId(id);
+        System.out.println("ID DELETADO COM SUCESSO!");
+        sc.close();
 	}
         
 	
