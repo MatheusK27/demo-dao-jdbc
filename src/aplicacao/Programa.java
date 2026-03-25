@@ -2,10 +2,8 @@ package aplicacao;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
-
+import java.util.Scanner;	
 import model.dao.DaoFactory;
 import model.dao.VendedoresDao;
 import model.entidades.Departamento;
@@ -54,6 +52,7 @@ public class Programa {
         int id= sc.nextInt();
         vendedoresDao.deletarId(id);
         System.out.println("ID DELETADO COM SUCESSO!");
+       
         sc.close();
 	}
         
